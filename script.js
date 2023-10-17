@@ -24,8 +24,9 @@ initializeForm.addEventListener('submit', async (event) => {
 questionForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const formData = new FormData(questionForm);
+    console.log(formData.values())
     try {
-        const response = await fetch('http://127.0.0.1:5002/api/query_bot', {
+        const response = await fetch('https://flask-demo-007-5eef34a1dbfe.herokuapp.com/api/query_bot', {
             method: 'POST',
             body: formData,
         });
