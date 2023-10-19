@@ -39,7 +39,7 @@
                     const messageList = document.getElementById("messageList");
                     messageList.innerHTML = ''; // Clear previous messages
 
-                    data.forEach(message => {
+                    data.reverse().forEach(message => {
                         const li = document.createElement('li');
                         li.textContent = message;
                         messageList.appendChild(li);
