@@ -1,44 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Talk with your documents</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Message Board</title>
 </head>
 <body>
-    <div class="container">
-        <section id="initialize-chatbot">
-            <h2>Initialize Chatbot</h2>
-            <form id="initialize-form" action="http://127.0.0.1:5002/api/bot_initialize" method="POST" enctype="multipart/form-data">
-                <label for="bot_name">Bot Name:</label>
-                <input type="text" id="bot_name" name="bot_name" required><br><br>
+    <h1>Message Board</h1>
 
-                <label for="website_url">Website URL:</label>
-                <input type="url" id="website_url" name="website_url" placeholder="https://example.com"><br><br>
+    <h2>Add a Message</h2>
+    <input type="text" id="messageInput" placeholder="Type your message">
+    <button onclick="addMessage()">Add Message</button>
 
-                <label for="pdf">Upload PDF:</label>
-                <input type="file" id="pdf" name="pdf"><br><br>
+    <h2>Latest Messages</h2>
+    <ul id="messageList"></ul>
 
-                <input type="submit" value="Initialize Chatbot">
-            </form>
-        </section>
+    <script>
+        // Function to add a message by calling the 'add_message' API
+        function addMessage() {
+            const messageInput = document.getElementById("messageInput").value;
+            const formData = new FormData();
+            formData.append('message', messageInput);
 
-        <section id="ask-question">
-            <h2>Ask a Question</h2>
-            <form id="question-form" action="http://127.0.0.1:5002/api/query_bot" method="POST">
-                <label for="question">Your Question:</label>
-                <input type="text" id="question" name="question" required><br><br>
+            fetch('https://flask-demo-007-5eef34a1dbfe.herokuapp.com/add_message', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(data => {
+                // Refresh the page after adding the message
+                location.reload(); // This will refresh the page
+            })
+            .catch(error => console.error('Error:', error));
+        }
 
-                <button type="submit">Ask</button>
-            </form>
-            <div id="answer-container">
-                <h3>Chatbot Response:</h3>
-                <ul id="chat-history"></ul>
-            </div>
-        </section>
-    </div>
+        // Function to retrieve and display messages by calling the 'get_messages' API
+        function getMessages() {
+            fetch('https://flask-demo-007-5eef34a1dbfe.herokuapp.com/messages', { method: 'GET' })
+            .then(response => response.json())
+            .then(data => {
+                    const messageList = document.getElementById("messageList");
+                    messageList.innerHTML = ''; // Clear previous messages
 
-    <script src="script.js"></script>
+                    data.forEach(message => {
+                        const li = document.createElement('li');
+                        li.textContent = message;
+                        messageList.appendChild(li);
+                    });
+                })
+            .catch(error => console.error('Error:', error));
+        }
+        
+
+        // Initially load messages
+        getMessages();
+    </script>
 </body>
 </html>
