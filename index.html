@@ -20,7 +20,7 @@
             const formData = new FormData();
             formData.append('message', messageInput);
 
-            fetch('https://flask-demo-007-5eef34a1dbfe.herokuapp.com/add_message', {
+            fetch('https://documentgpt-570160c44d42.herokuapp.com/add_message', {
                 method: 'POST',
                 body: formData,
             })
@@ -33,7 +33,7 @@
 
         // Function to retrieve and display messages by calling the 'get_messages' API
         function getMessages() {
-            fetch('https://flask-demo-007-5eef34a1dbfe.herokuapp.com/messages', { method: 'GET' })
+            fetch('https://documentgpt-570160c44d42.herokuapp.com/get_messages', { method: 'GET' })
             .then(response => response.json())
             .then(data => {
                     const messageList = document.getElementById("messageList");
