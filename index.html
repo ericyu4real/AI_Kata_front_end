@@ -1,56 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Message Board</title>
+    <title>Bubble Tea Inquiry</title>
 </head>
 <body>
-    <h1>Message Board</h1>
+    <h1>Bubble Tea Help Desk</h1>
 
-    <h2>Add a Message</h2>
+    <h2>Ask a question</h2>
     <input type="text" id="messageInput" placeholder="Type your message">
-    <button onclick="addMessage()">Add Message</button>
+    <button onclick="addMessage()">Send</button>
 
-    <h2>Latest Messages</h2>
+    <h2>Chat history</h2>
     <ul id="messageList"></ul>
 
     <script>
-        // Function to add a message by calling the 'add_message' API
+        // Function to add a message and update the chat history
         function addMessage() {
-            const messageInput = document.getElementById("messageInput").value;
+            const messageInput = document.getElementById("messageInput");
+            const messageValue = messageInput.value; // Get the input value
+            messageInput.value = ''; // Clear the input for new message
             const formData = new FormData();
-            formData.append('message', messageInput);
+            formData.append('message', messageValue);
 
-            fetch('https://documentgpt-570160c44d42.herokuapp.com/add_message', {
+            fetch('https://bubbletea.ericjiangshanyu.repl.co/userQuery', {
                 method: 'POST',
                 body: formData,
             })
+            .then(response => response.json()) // Convert the response to JSON
             .then(data => {
-                // Refresh the page after adding the message
-                location.reload(); // This will refresh the page
+                // Add the new message and bot response to the chat history
+                const messageList = document.getElementById("messageList");
+                const userMessageElement = document.createElement("li");
+                userMessageElement.textContent = `You: ${messageValue}`;
+                messageList.appendChild(userMessageElement);
+
+                if(data && data.response) {
+                    const botMessageElement = document.createElement("li");
+                    botMessageElement.textContent = `Bot: ${data.response}`;
+                    messageList.appendChild(botMessageElement);
+                }
             })
             .catch(error => console.error('Error:', error));
         }
-
-        // Function to retrieve and display messages by calling the 'get_messages' API
-        function getMessages() {
-            fetch('https://documentgpt-570160c44d42.herokuapp.com/get_messages', { method: 'GET' })
-            .then(response => response.json())
-            .then(data => {
-                    const messageList = document.getElementById("messageList");
-                    messageList.innerHTML = ''; // Clear previous messages
-
-                    data.reverse().forEach(message => {
-                        const li = document.createElement('li');
-                        li.textContent = message;
-                        messageList.appendChild(li);
-                    });
-                })
-            .catch(error => console.error('Error:', error));
-        }
-        
-
-        // Initially load messages
-        getMessages();
     </script>
 </body>
 </html>
