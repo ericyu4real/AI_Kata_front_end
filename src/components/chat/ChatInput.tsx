@@ -14,16 +14,16 @@ const ChatInput: FunctionComponent<ChatInputProps> = ({ sendMessage, clearHistor
     const [lastSendTime, setLastSendTime] = useState(0);
 
     const validateInput = (messageText: string) => {
-        const now = Date.now()
+        const now = Date.now();
         if (status.state === State.BUSY || messageText.trim().length === 0) return false;
         if (now - lastSendTime < import.meta.env.VITE_MINIMUM_DELAY) {
             setStatus({
                 state: State.FAILED,
-                detail: `Slow down, ${import.meta.env.VITE_BOT_NAME} cannot process another question just yet...`
-            })
+                detail: `Slow down, ${import.meta.env.VITE_BOT_NAME} cannot process another question just yet...`,
+            });
             return false;
         }
-        setLastSendTime(now)
+        setLastSendTime(now);
         // add other validation conditions
         return true;
     };
@@ -63,7 +63,7 @@ const ChatInput: FunctionComponent<ChatInputProps> = ({ sendMessage, clearHistor
                     className="ms-2"
                     variant="outline-secondary"
                     onClick={submit}
-                    disabled={messageText.length === 0 && status.state == State.BUSY}
+                    disabled={messageText.length === 0 || status.state == State.BUSY}
                 >
                     <i className="fa-solid fa-comment" />
                 </Button>

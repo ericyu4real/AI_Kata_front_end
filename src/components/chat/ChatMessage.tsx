@@ -1,8 +1,9 @@
 import { FunctionComponent, useMemo } from "react";
+import Image from "react-bootstrap/Image";
 import { Message } from "../../types/messageTypes";
 
-import userProfilePic from "../../assets/profile_user.png";
-import botProfilePic from "../../assets/profile_bot.png";
+import userProfilePic from "../../assets/profile_user.jpg";
+import botProfilePic from "../../assets/profile_bot.jpg";
 
 interface ChatMessageProps {
     message: Message;
@@ -11,7 +12,7 @@ interface ChatMessageProps {
 const ChatMessage: FunctionComponent<ChatMessageProps> = ({ message }) => {
     const getNameLine = useMemo(() => {
         const components = [
-            <div className="pb-2 fw-bold flex-fill text-nowrap text-small">{message.author}</div>,
+            <div className="pb-2 fw-bold  text-nowrap text-small">{message.author}</div>,
             <div className="message-dtm text-secondary px-2 text-nowrap">{new Date(message.created_dtm).toLocaleString()}</div>,
         ];
         if (!message.is_bot) return components.reverse();
@@ -27,14 +28,14 @@ const ChatMessage: FunctionComponent<ChatMessageProps> = ({ message }) => {
             {/* render profile pic on the left if bot */}
             {message.is_bot ? (
                 <div className="pe-3">
-                    <img style={{ height: "50px" }} src={botProfilePic} />
+                    <Image className="profile-circle" style={{ height: "50px" }} src={botProfilePic} roundedCircle />
                 </div>
             ) : (
                 ""
             )}
 
             <div className={"flex-fill " + (message.is_bot ? "" : "text-secondary text-end")}>
-                <div className="d-flex w-100">{getNameLine}</div>
+                <div className={"d-flex w-100" + (message.is_bot ? "" : " justify-content-end")}>{getNameLine}</div>
 
                 <div>{message.body}</div>
             </div>
@@ -42,7 +43,7 @@ const ChatMessage: FunctionComponent<ChatMessageProps> = ({ message }) => {
             {/* render profile pic on the right if user */}
             {!message.is_bot ? (
                 <div className="ps-3">
-                    <img style={{ height: "50px" }} src={userProfilePic} />
+                    <Image className="profile-circle" style={{ height: "50px" }} src={userProfilePic} roundedCircle />
                 </div>
             ) : (
                 ""
