@@ -17,3 +17,8 @@ export interface Status {
     state: State;
     detail: string;
 }
+
+export interface MessagePair {
+    user_message: Message;
+    bot_message: Message;
+}

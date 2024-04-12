@@ -7,18 +7,18 @@ import { Col, Container, Row } from "react-bootstrap";
 function App() {
     return (
         <>
-                <Container className="gradient" fluid>
-                    <Row>
-                        <Col></Col>
-                        <Col className="p-0 vh-100 p-2" sm="10" md="8" lg="6">
-                            <div className="h-100 d-flex flex-column shadow chat-container p-0 bg-light">
-                                <Navigation />
-                                <Chat />
-                            </div>
-                        </Col>
-                        <Col></Col>
-                    </Row>
-                </Container>
+            <Container className="gradient" fluid>
+                <Row>
+                    <Col></Col>
+                    <Col className="p-0 dvh-100 p-2" sm="10" md="8" lg="6">
+                        <div className="h-100 d-flex flex-column shadow chat-container p-0 bg-light">
+                            <Navigation />
+                            <Chat />
+                        </div>
+                    </Col>
+                    <Col></Col>
+                </Row>
+            </Container>
         </>
     );
 }

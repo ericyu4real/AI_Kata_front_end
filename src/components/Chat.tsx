@@ -1,16 +1,18 @@
 import { FunctionComponent, useState, useEffect } from "react";
 import ChatDisplay from "./chat/ChatDisplay";
 import ChatInput from "./chat/ChatInput";
-import { Message, State, Status } from "../types/messageTypes";
+import { Message, MessagePair, State, Status } from "../types/messageTypes";
 import { getRandomGreeting } from "../utils/greetings";
 
 const API_URL = import.meta.env.VITE_API_URL;
+const MAX_HISTORY = parseInt(import.meta.env.VITE_MAX_HISTORY);
 
 interface ChatProps {}
 
 const Chat: FunctionComponent<ChatProps> = ({}) => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [status, setStatus] = useState<Status>({ state: State.IDLE, detail: "" });
+    const [sessionHistory, setSessionHistory] = useState<MessagePair[]>([]);
 
     // load chat history
     useEffect(() => {
@@ -22,7 +24,6 @@ const Chat: FunctionComponent<ChatProps> = ({}) => {
                 author: "system",
                 is_bot: false,
             };
-            console.log(JSON.parse(messages_str));
             setMessages([...JSON.parse(messages_str), linebreak]);
         }
 
@@ -48,24 +49,40 @@ const Chat: FunctionComponent<ChatProps> = ({}) => {
 
         const formData = new FormData();
         formData.append("query", message.body);
+        formData.append("history", JSON.stringify(sessionHistory));
         fetch(API_URL + "/query", {
             method: "POST",
             body: formData,
         })
             .then((res) => res.json())
             .then((result) => {
-                const msg: Message = {
+                // success message response
+                const res_msg: Message = {
                     author: import.meta.env.VITE_BOT_NAME,
                     created_dtm: Date.now(),
                     body: result.response,
                     is_bot: true,
                 };
+
+                // track last MAX_HISTORY message exchanges
+                if (MAX_HISTORY > 0) {
+                    const history = [...sessionHistory];
+                    if (history.length >= MAX_HISTORY) {
+                        history.shift();
+                    }
+                    history.push({
+                        user_message: message,
+                        bot_message: res_msg,
+                    });
+                    setSessionHistory(history);
+                }
+
                 setMessages((cur) => {
-                    const temp = [...cur, msg];
+                    const temp = [...cur, res_msg];
                     localStorage.setItem("history", JSON.stringify(temp));
                     return temp;
                 });
-                console.log(result);
+                // console.log(result);
                 setStatus({ state: State.IDLE, detail: "" });
             })
             .catch((err) => {
