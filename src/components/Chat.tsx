@@ -56,6 +56,7 @@ const Chat: FunctionComponent<ChatProps> = ({}) => {
         })
             .then((res) => res.json())
             .then((result) => {
+                console.log('Chat History:', result.chat_history);
                 // success message response
                 const res_msg: Message = {
                     author: import.meta.env.VITE_BOT_NAME,
