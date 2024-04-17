@@ -19,7 +19,7 @@ const StatusMessage: FunctionComponent<StatusMessageProps> = ({ status }) => {
                 </>
             ) : (
                 <>
-                    <i className="fa-solid fa-spinner fa-spin-pulse text-primary me-3" /> {import.meta.env.VITE_BOT_NAME} is responding to you...
+                    <i className="fa-solid fa-spinner fa-spin-pulse text-primary me-3" /> {process.env.NEXT_PUBLIC_BOT_NAME} is responding to you...
                 </>
             )}
         </div>

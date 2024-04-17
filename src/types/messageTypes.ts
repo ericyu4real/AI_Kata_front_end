@@ -1,10 +1,8 @@
-import { ReactElement } from "react";
-
 export interface Message {
     created_dtm: number;
     author: string;
     is_bot: boolean;
-    body: string | ReactElement;
+    body: string;
 }
 
 export enum State {

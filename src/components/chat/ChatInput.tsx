@@ -2,6 +2,8 @@ import { FunctionComponent, useState } from "react";
 import { Button, Form, Container } from "react-bootstrap";
 import { Message, State, Status } from "../../types/messageTypes";
 
+const MINIMUM_DELAY = parseInt(process.env.NEXT_PUBLIC_MINIMUM_DELAY ?? "0");
+
 interface ChatInputProps {
     clearHistory: Function;
     sendMessage: Function;
@@ -16,10 +18,10 @@ const ChatInput: FunctionComponent<ChatInputProps> = ({ sendMessage, clearHistor
     const validateInput = (messageText: string) => {
         const now = Date.now();
         if (status.state === State.BUSY || messageText.trim().length === 0) return false;
-        if (now - lastSendTime < import.meta.env.VITE_MINIMUM_DELAY) {
+        if (now - lastSendTime < MINIMUM_DELAY) {
             setStatus({
                 state: State.FAILED,
-                detail: `Slow down, ${import.meta.env.VITE_BOT_NAME} cannot process another question just yet...`,
+                detail: `Slow down, ${process.env.NEXT_PUBLIC_BOT_NAME} cannot process another question just yet...`,
             });
             return false;
         }

@@ -4,8 +4,9 @@ import ChatInput from "./chat/ChatInput";
 import { Message, MessagePair, State, Status } from "../types/messageTypes";
 import { getRandomGreeting } from "../utils/greetings";
 
-const API_URL = import.meta.env.VITE_API_URL;
-const MAX_HISTORY = parseInt(import.meta.env.VITE_MAX_HISTORY);
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const MAX_HISTORY = parseInt(process.env.NEXT_PUBLIC_MAX_HISTORY ?? "0");
+const BOT_NAME = process.env.NEXT_PUBLIC_BOT_NAME ?? "Bot";
 
 interface ChatProps {}
 
@@ -30,7 +31,7 @@ const Chat: FunctionComponent<ChatProps> = ({}) => {
         // Send a greeting message after 2 seconds
         const greetingTimeout = setTimeout(() => {
             const greetingMessage: Message = {
-                author: import.meta.env.VITE_BOT_NAME,
+                author: BOT_NAME,
                 created_dtm: Date.now(),
                 body: getRandomGreeting(),
                 is_bot: true,
@@ -58,7 +59,7 @@ const Chat: FunctionComponent<ChatProps> = ({}) => {
             .then((result) => {
                 // success message response
                 const res_msg: Message = {
-                    author: import.meta.env.VITE_BOT_NAME,
+                    author: BOT_NAME,
                     created_dtm: Date.now(),
                     body: result.response,
                     is_bot: true,
