@@ -13,9 +13,9 @@ const Navigation: FunctionComponent<NavigationProps> = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        {/* <Nav.Link href="https://calendar.google.com/calendar/embed?src=f2d1fce90f68f8da6d97f5b3c71b4f4083a75409dc52d9bf8dff3dbd28be7347%40group.calendar.google.com&ctz=America%2FToronto">
+                        <Nav.Link href="https://calendar.google.com/calendar/embed?src=f2d1fce90f68f8da6d97f5b3c71b4f4083a75409dc52d9bf8dff3dbd28be7347%40group.calendar.google.com&ctz=America%2FToronto">
                             <i className="fa-regular fa-calendar-days me-2" title="Calendar" /> <span className="nav-item-text">Calendar</span>
-                        </Nav.Link> */}
+                        </Nav.Link>
                         <Nav.Link href="https://mscac.utoronto.ca/contact/">
                             <i className="fa-solid fa-phone me-2" title="Contact" /> <span className="nav-item-text">Contact</span>
                         </Nav.Link>
