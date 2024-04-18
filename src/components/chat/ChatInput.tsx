@@ -5,10 +5,10 @@ import { Message, State, Status } from "../../types/messageTypes";
 const MINIMUM_DELAY = parseInt(process.env.NEXT_PUBLIC_MINIMUM_DELAY ?? "0");
 
 interface ChatInputProps {
-    clearHistory: Function;
-    sendMessage: Function;
+    clearHistory: () => void;
+    sendMessage: (message: Message) => void;
     status: Status;
-    setStatus: Function;
+    setStatus: (s: Status) => void;
 }
 
 const ChatInput: FunctionComponent<ChatInputProps> = ({ sendMessage, clearHistory, status, setStatus }) => {
@@ -69,7 +69,7 @@ const ChatInput: FunctionComponent<ChatInputProps> = ({ sendMessage, clearHistor
                 >
                     <i className="fa-solid fa-comment" />
                 </Button>
-                <div className="clear-chat-button text-secondary" onClick={() => clearHistory()}>
+                <div className="clear-chat-button text-secondary" onClick={clearHistory}>
                     Clear Chat
                 </div>
             </div>

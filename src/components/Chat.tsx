@@ -8,9 +8,9 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const MAX_HISTORY = parseInt(process.env.NEXT_PUBLIC_MAX_HISTORY ?? "0");
 const BOT_NAME = process.env.NEXT_PUBLIC_BOT_NAME ?? "Bot";
 
-interface ChatProps {}
+// interface ChatProps {}
 
-const Chat: FunctionComponent<ChatProps> = ({}) => {
+const Chat: FunctionComponent = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [status, setStatus] = useState<Status>({ state: State.IDLE, detail: "" });
     const [sessionHistory, setSessionHistory] = useState<MessagePair[]>([]);
