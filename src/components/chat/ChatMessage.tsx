@@ -25,7 +25,7 @@ const ChatMessage: FunctionComponent<ChatMessageProps> = ({ message }) => {
             {/* render profile pic on the left if bot */}
             {message.is_bot ? (
                 <div className="pe-3">
-                    <Image className="profile-circle" style={{ height: "50px" }} src="/img/profile_user.jpg" roundedCircle />
+                    <Image className="profile-circle" style={{ height: "50px" }} src="/img/profile_bot.jpg" roundedCircle />
                 </div>
             ) : (
                 ""
@@ -40,7 +40,7 @@ const ChatMessage: FunctionComponent<ChatMessageProps> = ({ message }) => {
             {/* render profile pic on the right if user */}
             {!message.is_bot ? (
                 <div className="ps-3">
-                    <Image className="profile-circle" style={{ height: "50px" }} src="/img/profile_bot.jpg" roundedCircle />
+                    <Image className="profile-circle" style={{ height: "50px" }} src="/img/profile_user.jpg" roundedCircle />
                 </div>
             ) : (
                 ""
