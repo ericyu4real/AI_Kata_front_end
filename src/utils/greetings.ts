@@ -1,14 +1,14 @@
 const greetings = [
     "Greetings! How can I be of service?",
-    "Hello! Let me know how I can help you.",
-    "Hi! What do you need assistance with?",
+    "Hey! How's it going?",
+    "What’s up!",
     "Good day! How may I help you today?",
     "Hello! How can I make your day better?",
     "Welcome! How may I assist you now?",
-    "Hello, how can I assist you today?",
+    "Hi! Looking for some help?",
     "Hi there! What can I do for you?",
-    "Hey! Ready to help you. What do you need?",
-    "Hi, there! How can I be helpful today?",
+    "Welcome! What's on your mind today?",
+    "Hello! Got a question for me?"
 ];
 
 export const getRandomGreeting = () => {
