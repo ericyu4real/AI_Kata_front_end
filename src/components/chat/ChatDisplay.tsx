@@ -40,9 +40,9 @@ const ChatDisplay: FunctionComponent<ChatDisplayProps> = ({ messages, status }) 
     };
 
     return (
-        <div className="flex-fill vh-0  chat-display-container">
+        <div className="flex-fill chat-display-container">
             <Container>
-                <div style={{height: "1rem"}}></div>
+                <div style={{ height: "1rem" }}></div>
                 {messagelist}
                 {drawStatus()}
                 <div ref={messagesEndRef} />
