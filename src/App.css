@@ -30,6 +30,9 @@ body {
     border-radius: 36px;
     /* transform: scale(1); */
     transition: outline 1s;
+    display: block;
+    width: fit-content;
+    max-width: calc(100% - 2rem);
     /* background: rgba(0, 0, 0, 0); */
 }
 

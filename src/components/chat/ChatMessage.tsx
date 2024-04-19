@@ -7,44 +7,43 @@ interface ChatMessageProps {
 }
 
 const ChatMessage: FunctionComponent<ChatMessageProps> = ({ message }) => {
-    const getNameLine = useMemo(() => {
+    // memoize horizontal layout of name / dtm
+    const nameLine = useMemo(() => {
         const components = [
-            <div className="pb-2 fw-bold  text-nowrap text-small">{message.author}</div>,
-            <div className="message-dtm text-secondary px-2 text-nowrap">{new Date(message.created_dtm).toLocaleString()}</div>,
+            <div className="pb-2 fw-bold  text-nowrap text-small" key="msg-header-author">
+                {message.author}
+            </div>,
+            <div className="message-dtm text-secondary px-2 text-nowrap" key="msg-header-time">
+                {new Date(message.created_dtm).toLocaleString()}
+            </div>,
         ];
         if (!message.is_bot) return components.reverse();
         return components;
     }, [message]);
 
+    // memoize horizontal layout of profile pic / body
+    const horizontalLayout = useMemo(() => {
+        const src = message.is_bot ? "/img/profile_bot.jpg" : "/img/profile_user.jpg";
+        const components = [
+            <div>
+                <Image className="profile-circle" style={{ height: "50px" }} src={src} roundedCircle />
+            </div>,
+            <div className={"flex-fill px-3 " + (message.is_bot ? "" : "text-secondary text-end")}>
+                <div className={"d-flex" + (message.is_bot ? "" : " justify-content-end")}>{nameLine}</div>
+                <div>{message.body}</div>
+            </div>,
+        ];
+        if (!message.is_bot) return components.reverse();
+        return components;
+    }, [message, nameLine]);
+
     return (
         <div
             className={`chat-message d-flex p-2 my-3 chat-fly-${message.is_bot ? "left" : "right"}-animation border shadow-sm bg-opacity-10 ${
-                message.is_bot ? "bg-info me-5" : "bg-secondary ms-5"
+                message.is_bot ? "bg-info" : "bg-secondary ms-auto"
             }`}
         >
-            {/* render profile pic on the left if bot */}
-            {message.is_bot ? (
-                <div className="pe-3">
-                    <Image className="profile-circle" style={{ height: "50px" }} src="/img/profile_user.jpg" roundedCircle />
-                </div>
-            ) : (
-                ""
-            )}
-
-            <div className={"flex-fill " + (message.is_bot ? "" : "text-secondary text-end")}>
-                <div className={"d-flex w-100" + (message.is_bot ? "" : " justify-content-end")}>{getNameLine}</div>
-
-                <div>{message.body}</div>
-            </div>
-
-            {/* render profile pic on the right if user */}
-            {!message.is_bot ? (
-                <div className="ps-3">
-                    <Image className="profile-circle" style={{ height: "50px" }} src="/img/profile_bot.jpg" roundedCircle />
-                </div>
-            ) : (
-                ""
-            )}
+            {horizontalLayout}
         </div>
     );
 };
