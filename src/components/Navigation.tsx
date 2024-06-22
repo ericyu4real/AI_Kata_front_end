@@ -8,7 +8,7 @@ const Navigation: FunctionComponent<NavigationProps> = () => {
         <Navbar bg="primary" data-bs-theme="dark" expand="lg" className="shadow nav-bar">
             <Container>
                 <Navbar.Brand className="brand p-0" href="https://mscac.utoronto.ca/">
-                    <img src="/img/uoft-logo-1.png" style={{ height: "3.2rem" }} alt="MScAC" />
+                    <img src="public\img\AS CS MSAC Colour Signature Text Lockup-digital.png" style={{ height: "3.2rem" }} alt="MScAC" />
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
