@@ -23,7 +23,7 @@ const ChatMessage: FunctionComponent<ChatMessageProps> = ({ message }) => {
 
     // memoize horizontal layout of profile pic / body
     const horizontalLayout = useMemo(() => {
-        const src = message.is_bot ? "/img/profile_bot.jpg" : "/img/profile_user.jpg";
+        const src = message.is_bot ? "/img/MScAC Social Logo.png" : "/img/profile_user.jpg";
         const components = [
             <div>
                 <Image className="profile-circle" style={{ height: "50px" }} src={src} roundedCircle />
