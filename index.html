@@ -43,7 +43,7 @@
                 const chatHistory = data.chat_history || [];
 
                 chatHistory.forEach(message => {
-                    let messageClass = message.role === "user" ? "user-message" : "bot-message";
+                    const messageClass = message.role === "user" ? "user-message" : "bot-message";
                     messagesDiv.innerHTML += `<p><strong>${message.role}:</strong> ${message.content}</p>`;
                 });
 
@@ -51,6 +51,7 @@
                 messagesDiv.scrollTop = messagesDiv.scrollHeight;
             } catch (error) {
                 console.error("Error loading chat history:", error);
+                alert("Failed to load chat history. Please try again later.");
             }
         }
 
@@ -74,13 +75,18 @@
                 });
 
                 const data = await response.json();
-                messagesDiv.innerHTML += `<p><strong>Chatbot:</strong> ${data.response}</p>`;
+                if (data.response) {
+                    messagesDiv.innerHTML += `<p><strong>Chatbot:</strong> ${data.response}</p>`;
+                } else {
+                    messagesDiv.innerHTML += `<p><strong>Chatbot:</strong> Sorry, I couldn't process your request. Please try again.</p>`;
+                }
                 document.getElementById('userInput').value = "";
 
                 // Scroll to the bottom of the chatbox to show the latest messages
                 messagesDiv.scrollTop = messagesDiv.scrollHeight;
             } catch (error) {
                 console.error("Error:", error);
+                messagesDiv.innerHTML += `<p><strong>Chatbot:</strong> An error occurred. Please try again later.</p>`;
             }
         }
 
@@ -107,6 +113,7 @@
                 loadChatHistory();
             } catch (error) {
                 console.error("Error:", error);
+                alert("Failed to end the session. Please try again later.");
             }
         }
     </script>
