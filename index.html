@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShopWise AI Assistant</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <!-- Include Marked.js -->
 </head>
 
 <body>
@@ -44,7 +45,11 @@
 
                 chatHistory.forEach(message => {
                     const messageClass = message.role === "user" ? "user-message" : "bot-message";
-                    messagesDiv.innerHTML += `<p><strong>${message.role}:</strong> ${message.content}</p>`;
+                    if (message.role === "assistant") {
+                        messagesDiv.innerHTML += `<p><strong>${message.role}:</strong> ${marked.parse(message.content)}</p>`;
+                    } else {
+                        messagesDiv.innerHTML += `<p><strong>${message.role}:</strong> ${message.content}</p>`;
+                    }
                 });
 
                 // Scroll to the bottom of the chatbox to show the latest messages
@@ -76,7 +81,7 @@
 
                 const data = await response.json();
                 if (data.response) {
-                    messagesDiv.innerHTML += `<p><strong>Chatbot:</strong> ${data.response}</p>`;
+                    messagesDiv.innerHTML += `<p><strong>Chatbot:</strong> ${marked.parse(data.response)}</p>`;
                 } else {
                     messagesDiv.innerHTML += `<p><strong>Chatbot:</strong> Sorry, I couldn't process your request. Please try again.</p>`;
                 }
