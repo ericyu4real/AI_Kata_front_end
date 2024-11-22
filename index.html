@@ -44,7 +44,7 @@
                 const chatHistory = data.chat_history || [];
 
                 // Check if chat history is empty or null
-                if (!chatHistory || chatHistory.length === 0) {
+                if (chatHistory.length === 0) {
                     messagesDiv.innerHTML += `<p><strong>Chatbot:</strong> Hello! How can I assist you today?</p>`;
                 } else {
                     chatHistory.forEach(message => {
