@@ -43,14 +43,19 @@
                 const data = await response.json();
                 const chatHistory = data.chat_history || [];
 
-                chatHistory.forEach(message => {
-                    const messageClass = message.role === "user" ? "user-message" : "bot-message";
-                    if (message.role === "assistant") {
-                        messagesDiv.innerHTML += `<p><strong>${message.role}:</strong> ${marked.parse(message.content)}</p>`;
-                    } else {
-                        messagesDiv.innerHTML += `<p><strong>${message.role}:</strong> ${message.content}</p>`;
-                    }
-                });
+                // Check if chat history is empty or null
+                if (!chatHistory || chatHistory.length === 0) {
+                    messagesDiv.innerHTML += `<p><strong>Chatbot:</strong> Hello! How can I assist you today?</p>`;
+                } else {
+                    chatHistory.forEach(message => {
+                        const messageClass = message.role === "user" ? "user-message" : "bot-message";
+                        if (message.role === "assistant") {
+                            messagesDiv.innerHTML += `<p><strong>${message.role}:</strong> ${marked.parse(message.content)}</p>`;
+                        } else {
+                            messagesDiv.innerHTML += `<p><strong>${message.role}:</strong> ${message.content}</p>`;
+                        }
+                    });
+                }
 
                 // Scroll to the bottom of the chatbox to show the latest messages
                 messagesDiv.scrollTop = messagesDiv.scrollHeight;
